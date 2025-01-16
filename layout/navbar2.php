@@ -98,6 +98,18 @@
                if($user["role"] === "2"){?>
                <ul class="navbar-nav">
 
+               <li class="nav-item">
+                        <a href="./index.php?request" class="nav-link"  >
+                            <span class="nav-text btn btn-outline-primary ms-auto"
+                            style="<?php 
+                             if(isset($_GET['request'])){
+                                echo "background-color:rgb(42, 16, 240);color:#000000;";
+                            } 
+                            ?>"
+                             id="request">book request<i class="fa fa-bookmark "></i></span>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="./index.php?allRoom" class="nav-link" >
                             <span class="nav-text btn btn-outline-info ms-auto" 

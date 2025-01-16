@@ -12,15 +12,10 @@
                    Booking Request List
                 </h3>
                 <div class="card col-8 mx-auto">
-                    <div class="card-title">
-                        <div class="d-flex p-3">
-                            <h2 class="" style="color: var(--nav-color);">Booking List</h2>
-                            <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
-                        </div>
                         <div class="card-body">
                             <table class="table table-bordered  table-striped">
                                 <thead>
-                                
+                                               
                                     <tr>
                                         <th>ID</th>
                                         <th>Customer Name</th>
@@ -34,34 +29,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php $customers = get_customer($mysqli);$i = 1;?>
-                                <?php while ($customer = $customers->fetch_assoc()) { ?>  
+                            <?php $requests = join_customer_booking($mysqli); ?>
+                                    <?php $i =1 ;?>
+                                    <?php while ($request = $requests->fetch_assoc()) { ?> 
                                 
                                     <tr>
                                         <td><?= $i?></td>
-                                        <td><?= $customer["name"]?></td>
-                                        <td><?= $customer["nrc"]?></td>
-                                        <td><?= $customer["name"]?></td>
-                                        <?php $i++; }?>
-                                        <td><?= $booking["checkin_date"]?></td>
-                                        <td><?= $booking["checkout_date"]?></td>
-                                        <td><?= $booking["customer_id"]?></td>
+                                        <td><?= $request["customer_name"]?></td>
+                                        <td><?= $request["nrc"]?></td>
+                                        <td><?= $request["phone_no"]?></td>
+                                        <td><?= $request["email"]?></td>
+                                        <td><?= $request["checkin_date"]?></td>
+                                        <td><?= $request["checkout_date"]?></td>
+                                        
                                         <td>
-                                            <a href="?editId=<?=$booking['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
-                                            <button class="btn btn-sm btn-danger  deleteSelect" data-value="<?=$booking['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
+                                            <a href="./bookroom.php?editId=<?=$request['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
+                                            <button class="btn btn-sm btn-danger  deleteSelect" data-value="<?=$request['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                                         </td>
                                     
                                 
                                     </tr>
+                                    <?php $i++;} ?>
                                
                                 
                                 </tbody>
                             </table>
-                    <?php if (!isset($_POST['search'])) {
-                            require_once("../layout/pagination.php");
-                        } elseif (isset($_POST['search']) && $_POST['search'] == "") {
-                            require_once("../layout/pagination.php");
-                        } ?>
+                    
                 </div> 
                     </div>
 
