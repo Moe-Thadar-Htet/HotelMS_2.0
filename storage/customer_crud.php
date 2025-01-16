@@ -31,6 +31,26 @@ function get_customer_id($mysqli,$id)
     return $result->fetch_assoc();
 }
 
+function get_customers($mysqli, $currentPage)
+{
+    $sql = "SELECT * FROM `customer` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    return $mysqli->query($sql);
+}
+function get_customer_filter($mysqli, $key)
+{
+    $sql = "SELECT * FROM `customer` WHERE `customer_name` LIKE '%$key%' OR `email`='$key'";
+    return $mysqli->query($sql);
+}
+
+function get_customers_pag_count($mysqli)
+{
+    $sql = "SELECT COUNT(`id`) AS total FROM `customer`";
+    $count = $mysqli->query($sql);
+    $total = $count->fetch_assoc();
+    $page = ceil($total['total'] / 2) ;
+    return $page;
+}
+
 function delete_customer($mysqli,$id)
 {
     $sql = "DELETE FROM `customer` WHERE `id` = $id";

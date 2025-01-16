@@ -17,6 +17,26 @@ function get_duty_id($mysqli,$id)
     return $result->fetch_assoc();
 }
 
+function get_duties($mysqli, $currentPage)
+{
+    $sql = "SELECT * FROM `duty` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    return $mysqli->query($sql);
+}
+function get_duty_filter($mysqli, $key)
+{
+    $sql = "SELECT * FROM `duty` WHERE `duty_name` LIKE '%$key%' OR `duty_name`='$key'";
+    return $mysqli->query($sql);
+}
+
+function get_duty_pag_count($mysqli)
+{
+    $sql = "SELECT COUNT(`id`) AS total FROM `duty`";
+    $count = $mysqli->query($sql);
+    $total = $count->fetch_assoc();
+    $page = ceil($total['total'] / 2) ;
+    return $page;
+}
+
 function delete_duty($mysqli,$id)
 {
     $sql = "DELETE FROM `duty` WHERE `id` = $id";

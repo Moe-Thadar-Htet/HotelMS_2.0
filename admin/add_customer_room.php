@@ -15,7 +15,7 @@ $currentPage = 0;
         $currentPage = (int) $_GET["pageNo"];
     }
 
-    $pagTotal = get_customers_pag_count($mysqli);
+    $pagTotal = get_customer_rooms_pag_count($mysqli);
     if (isset($_GET['lest'])) {
         $currentPage = ($pagTotal * 7) - 7;
     }
@@ -33,7 +33,7 @@ if(isset($_GET["editId"])){
 }
 
 if(isset($_GET['deleteId'])){
-    if(delete_room_booking($mysqli,$_GET['deleteId']));
+    if(delete_customer_room($mysqli,$_GET['deleteId']));
     echo"<script>location.replace('./add_customer_room.php')</script>";
 }
 
@@ -129,9 +129,9 @@ if(isset($_POST["customer_id"])){
                     <label for="room_id" class="form-label">Room Id</label>
                     <select name="room_id" class="form-select" id="room_id">
                     <option value="">Select Room</option> 
-                        <?php $rooms= get_room($mysqli);
+                        <?php $rooms = get_room($mysqli);
                         ?>
-                        <?php while($room= $rooms->fetch_assoc()){  ?>
+                        <?php while($room = $rooms->fetch_assoc()){  ?>
                         <option value="<?= $room["id"] ?>"
                         <?php 
                         if(isset($_GET["editId"])){
@@ -140,7 +140,7 @@ if(isset($_POST["customer_id"])){
                                 }
                         }    
                         ?>>
-                        <?= $customer["room_no"]?>
+                        <?= $room["room_no"]?>
                         </option>
                         <?php } ?> 
                     </select>    
@@ -179,26 +179,30 @@ if(isset($_POST["customer_id"])){
     </div>
 
     <div class="card-form col-7 mt-3 p-3">
-    <div class="d-flex p-3">
-            <h2 class="title-color">Customer Room Detail List</h2>
-            <div id="search-wapper" class="search-form">
-                <form method="post">
-                    <div class="search-wapper d-flex">
-                        <div class="search ">
-                            <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
-                        </div>
-                        <div>
-                            <button class="search-icon form-control">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>  
+        <div id="search-wapper" class="search-form">
+            <form method="post">
+                <div class="search-wapper d-flex">
+                    <div class="search ">
+                        <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
                     </div>
-                </form>              
-            </div>
-           
-        </div> 
+                    <div>
+                        <button class="search-icon form-control">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>  
+                </div>
+            </form>              
+        </div>
         <div class="card-body p-3">
            <div class="card">
+           <div class="card-title ">
+            <div class="d-flex p-3">
+                <h2 class="" style="color: var(--nav-color);">User List</h2>
+                <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
+            </div> 
+               
+            </div>
+            
                 <div class="card-body">
                     <table class="table table-bordered  table-striped">
                         <thead>
@@ -214,9 +218,19 @@ if(isset($_POST["customer_id"])){
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $customer_room = get_customer_room($mysqli);
-                            $i = 1 ;?>
-                            <?php while ($customer_room = $customer_room->fetch_assoc()){?>
+                        <?php
+                            if (isset($_POST["search"]) && $_POST['search'] != '') {
+                                $customer_rooms = get_customer_rooms_filter($mysqli, $_POST['search']);
+                            } else {
+                                $customer_rooms = get_customer_rooms($mysqli,$currentPage);
+                            } ?>
+                        <?php
+                            if (isset($_POST["search"])) {
+                                $i = 1;
+                            } else {
+                                $i = $currentPage + 1;
+                            } ?>
+                            <?php while ($customer_room = $customer_rooms->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
                                 <td><?= $customer_room["customer_id"]?></td>
@@ -236,10 +250,13 @@ if(isset($_POST["customer_id"])){
                            
                         </tbody>
                     </table>
+                    <?php if (!isset($_POST['search'])) {
+                            require_once("../layout/pagination.php");
+                        } elseif (isset($_POST['search']) && $_POST['search'] == "") {
+                            require_once("../layout/pagination.php");
+                        } ?>
                 </div>
-                <div class="card-footer">
-                    <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
-                </div>
+                
            </div> 
         </div>
     </div>

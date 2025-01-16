@@ -8,6 +8,18 @@ $checkout_date = $checkout_date_err  = "";
 $customer_id = $customer_id_err = "";
 $invalid    = true;
 
+    $currentPage = 0;
+    if (isset($_GET["pageNo"])) {
+        $currentPage = (int) $_GET["pageNo"];
+    }
+
+    $pagTotal = get_booking_pag_count($mysqli);
+    if (isset($_GET['lest'])) {
+        $currentPage = ($pagTotal * 7) - 7;
+    }
+
+
+
 if(isset($_GET["editId"])){
     $editId = $_GET["editId"];
     $booking = get_booking_id($mysqli,$editId);
@@ -132,29 +144,30 @@ if(isset($_POST["room_id"])){
             </form>
         </div>
     </div>
-    <div class="card-form col-7 mt-3 p-3">
-       
-            
-        <div class="d-flex p-3 title">
-            <h2 class="title-color">Booking List</h2>
-            <div id="search-wapper" class="search-form">
-                <form method="post">
-                    <div class="search-wapper d-flex">
-                        <div class="search ">
-                            <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
-                        </div>
-                        <div>
-                            <button class="search-icon form-control">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>  
+    <div class="card-form col-7 mt-3 p-3"> 
+        <div id="search-wapper" class="search-form">
+            <form method="post">
+                <div class="search-wapper d-flex">
+                    <div class="search ">
+                        <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
                     </div>
-                </form>              
-            </div>
-            
-        </div> 
+                    <div>
+                        <button class="search-icon form-control">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>  
+                </div>
+            </form>              
+        </div>   
         <div class="card-body p-3">
             <div class="card">
+                <div class="card-title ">
+                    <div class="d-flex p-3">
+                        <h2 class="" style="color: var(--nav-color);">Booking List</h2>
+                        <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
+                    </div> 
+                
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered  table-striped">
                         <thead>
@@ -169,9 +182,19 @@ if(isset($_POST["room_id"])){
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $bookings = get_booking($mysqli);
-                            $i = 1 ;?>
-                            <?php while ($booking = $bookings->fetch_assoc()){?>
+                        <?php
+                            if (isset($_POST["search"]) && $_POST['search'] != '') {
+                                $bookings = get_booking_filter($mysqli, $_POST['search']);
+                            } else {
+                                $bookings = get_bookings($mysqli,$currentPage);
+                            } ?>
+                        <?php
+                            if (isset($_POST["search"])) {
+                                $i = 1;
+                            } else {
+                                $i = $currentPage + 1;
+                            } ?>
+                            <?php while ($booking = $bookings->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
                                 <td><?= $booking["room_id"]?></td>
@@ -189,12 +212,12 @@ if(isset($_POST["room_id"])){
                         
                         </tbody>
                     </table>
+                    <?php if (!isset($_POST['search'])) {
+                            require_once("../layout/pagination.php");
+                        } elseif (isset($_POST['search']) && $_POST['search'] == "") {
+                            require_once("../layout/pagination.php");
+                        } ?>
                 </div>
-                <div class="card-footer">
-                    <a href="./index.php" class="btn btn-success btn-md ms-auto ">Home</a>
-
-                </div>
-            
             </div>
 
            

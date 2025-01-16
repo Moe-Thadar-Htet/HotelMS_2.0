@@ -16,6 +16,25 @@ function get_room_type_id($mysqli,$id)
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
+function get_room_types($mysqli, $currentPage)
+{
+    $sql = "SELECT * FROM `room_type` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    return $mysqli->query($sql);
+}
+function get_room_types_filter($mysqli, $key)
+{
+    $sql = "SELECT * FROM `room_type` WHERE `room_type_name` LIKE '%$key%' OR `room_type_name`='$key'";
+    return $mysqli->query($sql);
+}
+
+function get_room_types_pag_count($mysqli)
+{
+    $sql = "SELECT COUNT(`id`) AS total FROM `room_type`";
+    $count = $mysqli->query($sql);
+    $total = $count->fetch_assoc();
+    $page = ceil($total['total'] / 2) ;
+    return $page;
+}
 
 function delete_room_type($mysqli,$id)
 {

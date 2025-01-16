@@ -1,5 +1,32 @@
 <!-- <script src="../asset/js2/main.js"></script> -->
 
+<script>
+    let roomBtn = document.querySelectorAll(".room-btn");
+    let roomIdValue =document.querySelectorAll(".roomIdValue");
+
+    for (let i = 0; i < roomBtn.length; i++) {
+        const element = roomBtn[i];
+        element.addEventListener("click", function () {
+            let roomNumbers = document.querySelectorAll(".room-no-value");
+            roomNumbers.forEach(el => {
+                el.innerHTML = element.getAttribute("data-value");
+                roomIdValue.forEach(elem=>{
+                    elem.value = element.getAttribute("data-id")
+                    localStorage.setItem("roomId",element.getAttribute("data-id"));
+                })
+            });
+        })
+    }
+
+    let roomId = localStorage.getItem("roomId");
+    if(roomId){
+        let roomIdValue =document.querySelectorAll(".roomIdValue");
+        roomIdValue.forEach(elem=>{
+            elem.value = roomId
+        })
+    }
+    
+</script>
 
 <script>
     const today = new Date().toISOString().split('T')[0];
@@ -38,23 +65,6 @@
         newMinCheckoutDate2.setDate(newMinCheckoutDate2.getDate() + 1);
         checkoutField2.setAttribute('min', newMinCheckoutDate2.toISOString().split('T')[0]);
     });
-</script>
-<script>
-    let roomBtn = document.querySelectorAll(".room-btn");
-    let roomIdValue =document.querySelectorAll(".roomIdValue");
-    for (let i = 0; i < roomBtn.length; i++) {
-        const element = roomBtn[i];
-        element.addEventListener("click", function () {
-            let roomNumbers = document.querySelectorAll(".room-no-value");
-            roomNumbers.forEach(el => {
-                el.innerHTML = element.getAttribute("data-value");
-                roomIdValue.forEach(elem=>{
-                    elem.value = element.getAttribute("data-id")
-                })
-            });
-        })
-    }
-    
 </script>
 </body>
 

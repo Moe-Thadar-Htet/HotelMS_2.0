@@ -164,12 +164,29 @@ if(isset($_POST["room_no"])){
 } ?>
 
     <div class="card-form col-7 mt-3 p-3">
-        <div class="d-flex p-3">
-            <h2 class="" style="color: var(--nav-color);">Room List</h2>
-            <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
-        </div> 
+    <!-- <div id="search-wapper" class="search-form">
+            <form method="post">
+                <div class="search-wapper d-flex">
+                    <div class="search ">
+                        <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
+                    </div>
+                    <div>
+                        <button class="search-icon form-control">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>  
+                </div>
+            </form>              
+        </div> -->
+        
         <div class="card-body p-3">
            <div class="card">
+            <div class="card-title">
+                <div class="d-flex p-3">
+                    <h2 class="" style="color: var(--nav-color);">Room List</h2>
+                    <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
+                </div> 
+            </div>
                 <div class="card-body">
               <!--  require_once("../layout/selectfloor.php") -->
                     <form action="" method="post" id="select-floor" class="mb-3">

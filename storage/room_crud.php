@@ -2,7 +2,12 @@
 function  add_room($mysqli, $room_no, $room_type, $single_bed, $double_bed, $twin_bed, $price, $taken)
 {
     $sql = "INSERT INTO `room` (`room_no`,`room_type`,`single_bed`,`double_bed`,`twin_bed`,`price`,`taken`) VALUE ('$room_no','$room_type',$single_bed,$double_bed,$twin_bed,'$price',0)";
-    return $mysqli->query($sql);
+    try {
+        $mysqli->query($sql);
+    } catch (mysqli_sql_exception $e) {
+        echo "Error: " . $e->getMessage() . $e->getCode();
+    }
+    
 }
 function get_room($mysqli)
 {
@@ -33,6 +38,11 @@ function delete_room($mysqli,$id)
 function update_room($mysqli,$id,$room_no,$room_type,$single_bed, $double_bed, $twin_bed,$price,$taken)
 {
     $sql = "UPDATE `room` SET `room_no` = '$room_no', `room_type` = '$room_type',`single_bed`='$single_bed',`double_bed`='$double_bed',`twin_bed`='$twin_bed', `price` = '$price', `taken` = '$taken' WHERE `id` = $id";
+    return $mysqli->query($sql);
+}
+function get_room_filter($mysqli, $key)
+{
+    $sql = "SELECT * FROM `room` WHERE `room_no` LIKE '%$key%' OR `email`='$key'";
     return $mysqli->query($sql);
 }
 

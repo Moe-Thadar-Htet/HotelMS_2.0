@@ -37,6 +37,26 @@ function get_booking_id($mysqli,$id)
     $result = $mysqli->query( $sql);
     return $result->fetch_assoc();
 }
+function get_bookings($mysqli, $currentPage)
+{
+    $sql = "SELECT * FROM `booking` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    return $mysqli->query($sql);
+}
+function get_booking_filter($mysqli, $key)
+{
+    $sql = "SELECT * FROM `booking` WHERE `room_id` LIKE '%$key%' OR `room_id`='$key'";
+    return $mysqli->query($sql);
+}
+
+function get_booking_pag_count($mysqli)
+{
+    $sql = "SELECT COUNT(`id`) AS total FROM `booking`";
+    $count = $mysqli->query($sql);
+    $total = $count->fetch_assoc();
+    $page = ceil($total['total'] / 2) ;
+    return $page;
+}
+
 function delete_booking($mysqli,$id)
 {
     $sql = "DELETE FROM `booking` WHERE `id` = $id";

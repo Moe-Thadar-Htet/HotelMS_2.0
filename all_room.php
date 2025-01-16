@@ -104,6 +104,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              
                 <p>Customer Name: </p>
                 <p>NRC: </p>
                 <p>Phone Number: </p>

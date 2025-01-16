@@ -8,7 +8,18 @@ $end_time = $end_time_err = "";
 $invalid = true;
 ?>
 
-<?php 
+<?php
+
+
+    $currentPage = 0;
+    if (isset($_GET["pageNo"])) {
+        $currentPage = (int) $_GET["pageNo"];
+    }
+
+    $pagTotal = get_duty_pag_count($mysqli);
+    if (isset($_GET['lest'])) {
+        $currentPage = ($pagTotal * 7) - 7;
+    }
 
 if(isset($_GET["editId"])){
     $editId = $_GET["editId"];
@@ -106,12 +117,29 @@ if(isset($_POST["duty_name"])){
     </div>
 
     <div class="card-form col-7 mt-3 p-3">
-        <div class="d-flex p-3">
-            <h2 class="" style="color: var(--nav-color);">Duty List</h2>
-            <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
-        </div> 
+    <div id="search-wapper" class="search-form">
+            <form method="post">
+                <div class="search-wapper d-flex">
+                    <div class="search ">
+                        <input class="search-input form-control" type="text" name="search" placeholder="Search" />    
+                    </div>
+                    <div>
+                        <button class="search-icon form-control">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>  
+                </div>
+            </form>              
+        </div>
+       
         <div class="card-body p-3">
            <div class="card">
+            <div class="card-title">
+            <div class="d-flex p-3">
+                <h2 class="" style="color: var(--nav-color);">Duty List</h2>
+                <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
+            </div> 
+            </div>
                 <div class="card-body">
                     <table class="table table-bordered  table-striped">
                         <thead>
@@ -124,8 +152,19 @@ if(isset($_POST["duty_name"])){
                             </tr>
                         </thead>
                         <tbody> 
-                        <?php $duties = get_duty($mysqli);$i = 1;?>
-                        <?php while($duty = $duties->fetch_assoc()) {?>
+                        <?php
+                            if (isset($_POST["search"]) && $_POST['search'] != '') {
+                                $duties= get_duty_filter($mysqli, $_POST['search']);
+                            } else {
+                                $duties = get_duties($mysqli,$currentPage);
+                            } ?>
+                        <?php
+                            if (isset($_POST["search"])) {
+                                $i = 1;
+                            } else {
+                                $i = $currentPage + 1;
+                            } ?>
+                            <?php while ($duty= $duties->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
                                 <td><?= $duty["duty_name"]?></td>
@@ -140,6 +179,11 @@ if(isset($_POST["duty_name"])){
                            
                         </tbody>
                     </table>
+                    <?php if (!isset($_POST['search'])) {
+                            require_once("../layout/pagination.php");
+                        } elseif (isset($_POST['search']) && $_POST['search'] == "") {
+                            require_once("../layout/pagination.php");
+                        } ?>
                 </div>
            </div> 
         </div>
