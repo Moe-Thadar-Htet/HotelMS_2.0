@@ -1,0 +1,98 @@
+<!-- Button to open the Modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">
+    Open Registration Form
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registrationModalLabel">Room Registration</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Step 1: Choose Booking or Selling Option -->
+          <div id="step1">
+            <h6>Please choose an option:</h6>
+            <button type="button" class="btn btn-outline-success" id="bookRoomBtn">Book a Room</button>
+            <button type="button" class="btn btn-outline-danger" id="sellRoomBtn">Sell a Room</button>
+          </div>
+          
+          <!-- Step 2: Dynamic Form Based on Option Chosen -->
+          <div id="step2" style="display:none;">
+            <form id="registrationForm">
+              <!-- Fields for 'Book a Room' -->
+              <div id="bookRoomFields" style="display:none;">
+                <div class="mb-3">
+                  <label for="customerName" class="form-label">Customer Name</label>
+                  <input type="text" class="form-control" id="customerName" required>
+                </div>
+                <div class="mb-3">
+                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="phoneNumber" required>
+                </div>
+                <div class="mb-3">
+                  <label for="bookingDate" class="form-label">Choose a Date</label>
+                  <input type="date" class="form-control" id="bookingDate" required>
+                </div>
+              </div>
+  
+              <!-- Fields for 'Sell a Room' -->
+              <div id="sellRoomFields" style="display:none;">
+                <div class="mb-3">
+                  <label for="sellCustomerName" class="form-label">Customer Name</label>
+                  <input type="text" class="form-control" id="sellCustomerName" required>
+                </div>
+                <div class="mb-3">
+                  <label for="nrc" class="form-label">NRC</label>
+                  <input type="text" class="form-control" id="nrc" required>
+                </div>
+                <div class="mb-3">
+                  <label for="phoneNumberSell" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="phoneNumberSell" required>
+                </div>
+                <div class="mb-3">
+                  <label for="checkoutDate" class="form-label">Check-out Date</label>
+                  <input type="date" class="form-control" id="checkoutDate" required>
+                </div>
+              </div>
+  
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- JavaScript for Handling Form Steps -->
+  <script>
+    // Show Step 2 based on the button clicked
+    document.getElementById('bookRoomBtn').addEventListener('click', function() {
+      document.getElementById('step1').style.display = 'none'; // Hide Step 1
+      document.getElementById('step2').style.display = 'block'; // Show Step 2
+      document.getElementById('bookRoomFields').style.display = 'block'; // Show Book Room Fields
+      document.getElementById('sellRoomFields').style.display = 'none'; // Hide Sell Room Fields
+    });
+  
+    document.getElementById('sellRoomBtn').addEventListener('click', function() {
+      document.getElementById('step1').style.display = 'none'; // Hide Step 1
+      document.getElementById('step2').style.display = 'block'; // Show Step 2
+      document.getElementById('bookRoomFields').style.display = 'none'; // Hide Book Room Fields
+      document.getElementById('sellRoomFields').style.display = 'block'; // Show Sell Room Fields
+    });
+  
+    // Submit form handling (you can add your custom logic here)
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Form submitted!');
+      // Here you can add form data submission logic (e.g., AJAX, server-side processing)
+      $('#registrationModal').modal('hide'); // Hide modal after submission
+    });
+  </script>
+  

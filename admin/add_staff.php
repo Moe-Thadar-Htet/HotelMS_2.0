@@ -1,0 +1,195 @@
+<?php require_once("../layout/header.php")?>
+<?php require_once("../layout/navbar.php")?>
+<?php
+
+$staff_name= $staff_name_err ="";
+$age  = $age_err = "";
+$phone_no = $phone_no_err = "";
+$email= $email_err = "";
+$gender = $gender_err ="";
+$role = $role_err = "";
+$invalid = true;
+
+?>
+<?php 
+if(isset($_GET["editId"])){
+    $editId = $_GET["editId"];
+    $staff = get_staff_id($mysqli, $editId);
+    $staff_name = $staff["staff_name"];
+    $age        = $staff["age"];
+    $phone_no   = $staff["phone_no"];
+    $email      = $staff["email"];
+    $gender     = $staff["gender"];
+    $role       = $staff["role"];
+
+}
+
+if(isset($_GET["deleteId"])){
+    if(delete_staff($mysqli,$_GET["deleteId"])){
+        echo"<script>location.replace('./add_staff.php')</script>";
+    }
+}
+?>
+<?php
+  
+    if(isset($_POST["staff_name"])){
+        $staff_name = $_POST["staff_name"];
+        $age        = $_POST["age"];
+        $phone_no   = $_POST["phone_no"];
+        $email      = $_POST["email"];
+        $gender    = $_POST["gender"];
+        $role       = $_POST["role"];
+
+        if($staff_name === ""){
+            $staff_name_err = "Staff name can't be blanked!";
+            $invalid = false;
+        }
+        if($age === ""){
+            $age_err = "Age can't be blanked!";
+            $invalid = false;
+        }
+        if($phone_no === ""){
+            $phone_no_err = "Phone Number can't be blanked!";
+            $invalid = false;
+        }
+        if($email === ""){
+            $email_err = "Email can't be blanked!";
+            $invalid = false;
+        }
+        if($gender != "0" && $gender != "1"){
+            $gender_err = "Gender can't be blanked!";
+            $invalid = false;
+        }
+        if($role === ""){
+            $role_err = "Role can't be blanked!";
+            $invalid = false;
+        }
+
+        if($invalid){
+            if(isset($_GET["editId"])){
+                $update = update_staff($mysqli,$editId,$staff_name,$age,$phone_no,$email,$gender,$role);
+                if($update){
+                    echo"<script>location.replace(./add_staff.php)</script>";
+                }
+            }else{
+                $add = add_staff($mysqli,$staff_name,$age,$phone_no,$email,$gender,$role);
+                if($add){
+                    echo"<script>location.replace(./add_staff.php)</script>";
+                }
+            }
+        }
+
+    }
+?>
+
+
+<div class="room">
+    <div class="card-form col-4 mt-3 p-3">
+        <div class="card-title ">
+            <?php 
+                if(isset($_GET["editId"])){?>
+                <h2 class="text-center" style="color: var(--nav-color);">Update Staff</h2>
+                <?php }else{?>
+                <h2 class="text-center" style="color: var(--nav-color);">Add Staff</h2>
+                <?php }?>
+            <?php ?>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group "> 
+                    <label for="staff_name" class="form-label">Name</label>
+                    <input type="text" name="staff_name" class="form-control" id="staff_name" value="<?= $staff_name ?>">
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $staff_name_err ?></div>
+                </div>
+                <div class="form-group "> 
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" name="age" class="form-control" id="age" value="<?= $age ?>">
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $age_err ?></div>
+                </div>
+                <div class="form-group ">
+                    <label for="phone_no" class="form-label">Phone Number</label>
+                    <input type="tel" name="phone_no" class="form-control" id="phone_no" value="<?=$phone_no?>">
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $phone_no_err?></div>
+                </div>
+                <div class="form-group ">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" value="<?=$email?>">
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $email_err?></div>
+                </div>
+              
+                <div class="form-group ">
+                    <label for="gender">Gender</label>
+                    <input type="radio" id="male" name="gender" value="0">
+                    <label for="html">Male</label>
+                    <input type="radio" id="female" name="gender" value="1">
+                    <label for="html">Female</label>
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $gender_err?></div> 
+
+                </div> 
+                <div class="form-group ">
+                    <label for="role" class="form-label">Role</label>
+                    <input type="text" name="role" class="form-control" id="role" value="<?=$role?>">
+                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $role_err?></div>
+                </div>          
+                <div>
+                <?php if(isset($_GET["editId"])){?>
+                    <button class="btn col-2" type="submit" style="color:#fff;background-color:var(--nav-color);">Update</button> 
+                <?php }else{?>
+                    <button class="btn col-2" type="submit" style="color:#fff;background-color:var(--nav-color);">Add</button> 
+                <?php }?>
+                    
+                </div>   
+            </form>
+        </div>
+    </div>
+
+    <div class="card-form col-7 mt-3 p-3">
+        <div class="d-flex p-3">
+            <h2 class="" style="color: var(--nav-color);">Staff List</h2>
+            <a href="./index.php" class="btn btn-success btn-md ms-auto">Home</a>
+        </div> 
+        <div class="card-body p-3">
+           <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered  table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Staff Name</th>
+                                <th>Age</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <?php $staffs = get_staff($mysqli);$i = 1;?>
+                            <?php while($staff = $staffs->fetch_assoc()) {?>
+                            <tr>
+                                <td><?= $i?></td>
+                                <td><?= $staff["staff_name"]?></td>
+                                <td><?= $staff["age"]?></td>
+                                <td><?= $staff["phone_no"]?></td>
+                                <td><?= $staff["email"]?></td> 
+                                <td><?= $staff["gender"]?></td> 
+                                <td><?= $staff["role"]?></td> 
+                                <td>
+                                    <a href="add_staff.php?editId=<?= $staff["id"]?>" class="btn btn-success btn-sm" ><i class="fa fa-pen"></i></a>
+                                    <button class="btn btn-danger btn-sm deleteSelect" data-value="<?=$staff['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button> 
+                                </td> 
+
+                            </tr>
+                            <?php $i++; } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+           </div> 
+        </div>
+    </div>
+</div>
+
+<?php require_once("../layout/footer.php")?>
