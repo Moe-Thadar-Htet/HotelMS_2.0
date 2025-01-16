@@ -13,8 +13,19 @@
                         <a href="../admin/index.php" class="nav-link"  >
                             <span class="nav-text btn btn-outline-light ms-auto" id="home">Home<i class="fa fa-home "style="padding-left: 5px;"></i></span>
                         </a>
-                    <li>
-
+                    </li>
+                    <li class="nav-item">
+                        <a href="./index.php?request" class="nav-link"  >
+                            <span class="nav-text btn btn-outline-primary ms-auto"
+                            style="<?php 
+                             if(isset($_GET['request'])){
+                                echo "background-color:rgb(42, 16, 240);color:#000000;";
+                            } 
+                            ?>"
+                             id="request">book request<i class="fa fa-bookmark "></i></span>
+                        </a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a href="./index.php?allRoom" class="nav-link" >
                             <span class="nav-text btn btn-outline-info ms-auto" 
@@ -25,7 +36,7 @@
                             ?>"
                             id="all-room">All Rooms <i class="fa fa-bed"></i></span>
                         </a>
-                    <li>
+                    </li>
                     <li class="nav-item">
                         <a href="./index.php?available" class="nav-link ">
                             <span class="nav-text btn btn-outline-success ms-auto"
@@ -36,19 +47,19 @@
                             ?>"
                             id="available">Available <i class="fa fa-broom"></i></span>
                         </a>
-                        <li>
-                            <li class="nav-item">
-                                <a href="./index.php?soldout" class="nav-link ">
-                                    <span class="nav-text btn btn-outline-danger ms-auto"
-                                    style="<?php
-                                    if(isset($_GET['soldout'])){
-                                            echo "background-color: #DC3444;color:#FFFFFF;";
-                                        } 
-                                    ?>"
-                                    id="sold-out">Sold Out<i class="fa fa-exclamation-triangle" style="padding-left: 5px;"></i></span>
-                                </a>
-                            </li>
+                    </li>
+                        <li class="nav-item">
+                            <a href="./index.php?soldout" class="nav-link ">
+                                <span class="nav-text btn btn-outline-danger ms-auto"
+                                style="<?php
+                                if(isset($_GET['soldout'])){
+                                        echo "background-color: #DC3444;color:#FFFFFF;";
+                                    } 
+                                ?>"
+                                id="sold-out">Sold Out<i class="fa fa-exclamation-triangle" style="padding-left: 5px;"></i></span>
+                            </a>
                         </li>
+                    
                     </li>
                     
                     <li class="nav-item">

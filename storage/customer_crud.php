@@ -18,6 +18,13 @@ function  sell_customer($mysqli,$customer_name,$nrc,$phone_no,$email,$checkin,$c
     }
 
 }
+
+function join_customer_booking($mysqli)
+{
+    $sql= "SELECT c.*,b.checkin_date,b.checkout_date FROM `customer` c INNER JOIN `booking` b ON c.id = b.customer_id";
+    return $mysqli->query($sql);
+
+}
 function get_customer($mysqli)
 {
     $sql = "SELECT * FROM `customer`";

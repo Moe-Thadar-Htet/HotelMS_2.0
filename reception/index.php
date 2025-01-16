@@ -9,7 +9,9 @@
             require_once("../sold_out.php");
         } else if(isset($_GET['booked'])){
             require_once("../booked.php");
-        } else{
+        } else if(isset($_GET['request'])){
+            require_once("../booking_request.php");
+        }else{
             require_once("../all_room.php");
         }
      ?>

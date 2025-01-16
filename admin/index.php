@@ -106,9 +106,9 @@
             <button class="btn btn-admin  btn-md col-3">        
                 <a href="../reception/index.php"  class="card-title card-role"> <i class="fa-solid fa-list me-2"></i>Reception view</a>
             </button>
-            <button class="btn btn-admin  btn-md col-3">        
-                <a href="./add_booking_request.php" class="card-title card-role"> <i class="fa-solid fa-home me-2"></i>Booking Request</a>
-            </button>    
+            <!-- <button class="btn btn-admin  btn-md col-3">        
+                <a href="../booking_request.php" class="card-title card-role"> <i class="fa-solid fa-list me-2"></i>Booking Request List</a>
+            </button>     -->
         </div>  
     </div>
 

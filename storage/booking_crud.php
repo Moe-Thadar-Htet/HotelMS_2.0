@@ -57,6 +57,7 @@ function get_booking_pag_count($mysqli)
     return $page;
 }
 
+
 function delete_booking($mysqli,$id)
 {
     $sql = "DELETE FROM `booking` WHERE `id` = $id";

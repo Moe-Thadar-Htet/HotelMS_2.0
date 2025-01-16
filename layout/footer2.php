@@ -66,6 +66,7 @@
         checkoutField2.setAttribute('min', newMinCheckoutDate2.toISOString().split('T')[0]);
     });
 </script>
+
 </body>
 
 </html>
