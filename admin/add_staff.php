@@ -45,13 +45,20 @@ if(isset($_GET["deleteId"])){
 <?php
   
     if(isset($_POST["staff_name"])){
-        $staff_name = $_POST["staff_name"];
+        $staff_name = trim($_POST["staff_name"]);
         $age        = $_POST["age"];
         $phone_no   = $_POST["phone_no"];
         $email      = $_POST["email"];
-        $gender    = $_POST["gender"];
+        // $gender     = $_POST["gender"];
         $role       = $_POST["role"];
+        $gender = $_POST['gender'];
 
+        var_dump($gender);
+
+        if($gender == ""){
+            $gender_err == "choose one";
+            $invalid = false;
+        }
         if($staff_name === ""){
             $staff_name_err = "Staff name can't be blanked!";
             $invalid = false;
@@ -59,14 +66,32 @@ if(isset($_GET["deleteId"])){
         if($age === ""){
             $age_err = "Age can't be blanked!";
             $invalid = false;
+        }else if( strlen($age) < 18 ){
+            $age_err = "Age must be kk!";
+            $invalid = false;
         }
         if($phone_no === ""){
             $phone_no_err = "Phone Number can't be blanked!";
+            $invalid = false;
+        }else if(!is_numeric($phone_no)){
+            $phone_no_err = "Phone Number must be numeric!";
             $invalid = false;
         }
         if($email === ""){
             $email_err = "Email can't be blanked!";
             $invalid = false;
+        } else {
+            $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+            if (!$email) {
+                $email_err= "Invalid email format";
+                $invalid = false;
+
+            }
+        }
+        if($gender == ""){
+            $gender_err = "Gender can't be blanked!";
+            $invalid = false;
+
         }
         if($gender != "0" && $gender != "1"){
             $gender_err = "Gender can't be blanked!";
@@ -77,7 +102,7 @@ if(isset($_GET["deleteId"])){
             $invalid = false;
         }
 
-        if($invalid){
+        if(!$invalid){
             if(isset($_GET["editId"])){
                 $update = update_staff($mysqli,$editId,$staff_name,$age,$phone_no,$email,$gender,$role);
                 if($update){
@@ -132,9 +157,9 @@ if(isset($_GET["deleteId"])){
                 <div class="form-group ">
                     <label for="gender">Gender</label>
                     <input type="radio" id="male" name="gender" value="0">
-                    <label for="html">Male</label>
+                    <label for="male">Male</label>
                     <input type="radio" id="female" name="gender" value="1">
-                    <label for="html">Female</label>
+                    <label for="female">Female</label>
                     <div class="text-danger" id="valid" style="font-size:12px;"><?= $gender_err?></div> 
 
                 </div> 

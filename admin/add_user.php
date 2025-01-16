@@ -42,7 +42,7 @@ if(isset($_GET["deleteId"])){
 <?php
   
     if(isset($_POST["user_name"])){
-        $user_name = $_POST["user_name"];
+        $user_name = trim($_POST["user_name"]);
         $email =  $mysqli->real_escape_string($_POST['email']);
         $password = $mysqli->real_escape_string($_POST['password']);
         $phone_number = $_POST["phone_number"];
@@ -51,19 +51,35 @@ if(isset($_GET["deleteId"])){
         if($user_name === ""){
             $user_name_err = "User name can't be blanked!";
             $invalid = false;
+        }else if(is_numeric($phone_number)){
+            $user_name_err = "Use Name can't be number!";
+            $invalid = false;
         }
+
         if($email === ""){
             $email_err = "Email can't be blanked!";
             $invalid = false;
+        } else {
+            $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+            if (!$email) {
+                $email_err= "Invalid email format";
+                $invalid = false;
+
+            }
         }
         if($password === ""){
             $pssword_err = "Password cant't be blanked!";
             $invalid = false;
-
+        }else if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/", $password)) {
+            $passwordErr = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+            $invalid = false;
         }
         
         if($phone_number === ""){
             $phone_number_err = "Phone Number can't be blanked!";
+            $invalid = false;
+        }else if(!is_numeric($phone_number)){
+            $phone_number_err = "Phone Number must be numeric!";
             $invalid = false;
         }
         
@@ -116,7 +132,7 @@ if(isset($_GET["deleteId"])){
                     </div>
                     <div class="form-group ">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" value="<?= $email ?>">
+                        <input type="text" name="email" class="form-control" id="email" value="<?= $email ?>">
                         <div class="text-danger" id="valid" style="font-size:12px;"><?= $email_err?></div>
                     </div>
 

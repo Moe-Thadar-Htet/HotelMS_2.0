@@ -30,6 +30,13 @@ if(isset($_COOKIE['user'])){
 
         if($email === ""){
             $email_err= "User Email Cannot be blanked!";
+        }else {
+            $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+            if (!$email) {
+                $email_err= "Invalid email format";
+                $invalid = false;
+
+            }
         }
         
         if($password === ""){
@@ -83,7 +90,7 @@ if(isset($_COOKIE['user'])){
                 <?php } ?>
                 <form method="post">
                     <div class="form-floating mt-5">
-                        <input type="email" name="email" class="form-control" id="email" value="<?= $email?>" placeholder="Enter your email"/>
+                        <input type="text" name="email" class="form-control" id="email" value="<?= $email?>" placeholder="Enter your email"/>
                         <label for="email" class="form-label">User Email</label>
                         <div id="valid"><?= $email_err?></div>
                     </div>

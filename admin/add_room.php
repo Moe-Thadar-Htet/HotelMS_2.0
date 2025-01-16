@@ -42,7 +42,10 @@ if(isset($_POST["room_no"])){
      if($room_no ===  ""){
         $room_no_err =" Room Number can't be blanked!";
         $invalid     = false;
-     }
+     }}else if(!is_numeric($room_no)){
+        $room_no_err = "Room Number must be numeric!";
+        $invalid = false;
+    }
      if($room_type ===  ""){
         $room_type_err =" Room Type can't be blanked!";
         $invalid       = false;
@@ -50,19 +53,31 @@ if(isset($_POST["room_no"])){
      if($single_bed ===  ""){
         $single_bed_err ="Single Bed can't be blanked!";
         $invalid = false;
+        }else if(!is_numeric($single_bed)){
+            $single_bed_err = "Single_bed must be numeric!";
+            $invalid = false;
         }
      if($double_bed ===  ""){
         $double_bed_err ="Double Bed can't be blanked!";
+        $invalid = false;
+    }else if(!is_numeric($double_bed)){
+        $double_bed_err = "Double_bed must be numeric!";
         $invalid = false;
     }
      if($twin_bed ===  ""){
         $twin_bed_err ="Twin Bed can't be blanked!";
         $invalid = false;
-     }
+     }else if(!is_numeric($twin_bed)){
+        $twin_bed_err = "Twin_bed must be numeric!";
+        $invalid = false;
+    }
      if($price ===  ""){
         $price_err =" Price can't be blanked!";
         $invalid   = false;
-     }
+     }else if(!is_numeric($price)){
+        $price_err = "Price must be numeric!";
+        $invalid = false;
+    }
 
 
      if($invalid){
@@ -79,7 +94,7 @@ if(isset($_POST["room_no"])){
             } 
         }
     }
-     }
+     
 
 
 ?>
@@ -232,7 +247,7 @@ if(isset($_POST["room_no"])){
                                 <td><?=$room["single_bed"] ?></td>
                                 <td><?=$room["double_bed"] ?></td>
                                 <td><?=$room["twin_bed"] ?></td>
-                                <td><?=$room["price"] ?></td>
+                                <td class="text-end"><?= number_format($room["price"])." MMK" ?></td>
                                 <td>
                                     <a href="?editId=<?=$room['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
                                     <button class="btn btn-sm btn-danger  deleteSelect" data-value="<?=$room['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>

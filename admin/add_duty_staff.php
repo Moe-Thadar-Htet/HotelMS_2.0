@@ -180,8 +180,8 @@ if(isset($_POST["duty_id"])){
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Duty Name</th>
-                                <th>Staff Name</th>
+                                <th>Duty ID</th>
+                                <th>Staff ID</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                             
@@ -203,7 +203,7 @@ if(isset($_POST["duty_id"])){
                             <?php while ($duty_staff = $duty_staffs->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
-                                <td><?= $duty_staff["duty_name"]?></td>
+                                <td><?= $duty_staff["id"]?></td>
                                 <td><?= $duty_staff["staff_id"]?></td>
                                 <td><?= $duty_staff["start_date"]?></td>
                                 <td><?= $duty_staff["end_date"]?></td>

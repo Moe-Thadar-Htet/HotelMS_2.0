@@ -43,7 +43,7 @@ if(isset($_GET["deleteId"])){
 }
 
 if(isset($_POST["customer_name"])){
-    $customer_name   = $_POST["customer_name"];
+    $customer_name   = trim($_POST["customer_name"]);
     $division = $_POST["division"];
     $region = $_POST["region"];
     $citizen = $_POST["citizen"];
@@ -77,7 +77,11 @@ if(isset($_POST["customer_name"])){
         $nrc_no_err = "NRC Code can't be blanked!";
         $invalid = false;
         $status = false;
-     
+        }else if(!is_numeric($nrc_no) || strlen($nrc_no)!= 6){
+        $nrc_no_err = "NRC Code format is wrong!";
+        $invalid = false;
+        $status = false;
+
      }
      if(!$status){
         if(!$nrc){
@@ -86,16 +90,26 @@ if(isset($_POST["customer_name"])){
         }
        
      }
-     
-
+    
      if($phone_no === ""){
         $phone_no_err = "Phone Number can't be blanked!";
         $invalid = false;
+     }else if(!is_numeric($phone_no)) {
+        $phone_no_err = "Phone Number can't be Text!";
+        $invalid = false;
+
      }
      if($email === ""){
         $email_err =" Email can't be blanked!";
         $invalid   = false;
-     }
+     }else {
+        $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+        if (!$email) {
+            $email_err= "Invalid email format";
+            $invalid = false;
+
+        }
+    }
     //  if($checkin === ""){
     //     $checkin_err ="Checkin Date can't be blanked!";
     //     $invalid   = false;
@@ -198,7 +212,7 @@ if(isset($_POST["customer_name"])){
                                 </div>
                                 <div class="form-group ms-4 col-6">
                                     <label for="nrc_no" class="form-label">NRC Number</label>
-                                    <input type="number" name="nrc_no" class="form-control" id="nrc_no" placeholder="Enter Your NRC Number" />
+                                    <input type="text" name="nrc_no" class="form-control" id="nrc_no" placeholder="Enter Your NRC Number" />
                                     <div class="text-danger" id="valid" style="font-size:12px;"><?= $nrc_no_err ?></div>
                                 </div>
                             </div>
@@ -214,7 +228,7 @@ if(isset($_POST["customer_name"])){
                 </div>
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" value="<?=$email?>">
+                    <input type="text" name="email" class="form-control" id="email" value="<?=$email?>">
                     <div class="text-danger" id="valid"><?= $email_err?></div>
                 </div>
                 <!-- <div class="form-group"> 

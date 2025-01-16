@@ -28,7 +28,7 @@
                                     
                                     </tr>
                                 </thead>
-                                <tbody>
+                                 <tbody>
                             <?php $requests = join_customer_booking($mysqli); ?>
                                     <?php $i =1 ;?>
                                     <?php while ($request = $requests->fetch_assoc()) { ?> 

@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <span class="admin-text"><i class="fa-solid fa-hotel me-2 mt-3"></i>Booking request</span>
-                        <span class="d-inline"><?= count(get_booking($mysqli)->fetch_all());?></span>
+                        <span class="d-inline"><?= count(join_customer_booking($mysqli)->fetch_all());?></span>
                     </div>
                 </div>
 
