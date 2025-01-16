@@ -8,14 +8,32 @@ function  add_customer($mysqli,$customer_name,$nrc,$phone_no,$email)
 }
 function  sell_customer($mysqli,$customer_name,$nrc,$phone_no,$email,$checkin,$checkout,$roomIdValue)
 {
-    $sql = "INSERT INTO `customer` (`customer_name`,`nrc`,`phone_no`,`email`) VALUE ('$customer_name','$nrc','$phone_no','$email')";
-    if($mysqli->query($sql)) {
-        $sql = "SELECT id FROM `customer` ORDER BY `id` desc limit 1";
-        $idResult = $mysqli->query($sql);
-        $id = $idResult->fetch_assoc()['id'];
-        $sql = "UPDATE `room` SET `taken`=1 where `id`=$roomIdValue";
-        $mysqli->query($sql);
+
+    $sql = "SELECT * FROM `customer` WHERE `nrc`='$nrc'";
+    $customerResult = $mysqli->query($sql);
+    $customerResultID = $mysqli->query($sql);
+    if(count($customerResult->fetch_all())==0){
+        $sql = "INSERT INTO `customer` (`customer_name`,`nrc`,`phone_no`,`email`) VALUE ('$customer_name','$nrc','$phone_no','$email')";
+        if($mysqli->query($sql)) {
+            $sql = "SELECT id FROM `customer` ORDER BY `id` desc limit 1";
+            $idResult = $mysqli->query($sql);
+            $id = $idResult->fetch_assoc()['id'];
+            $sql = "UPDATE `room` SET `taken`=1 where `id`=$roomIdValue";
+            $mysqli->query($sql);
+            $sql = "INSERT INTO `customer_room` (`customer_id`,`room_id`,`checkin_time`,`checkout_time`) VALUE ($id,$roomIdValue,'$checkin','$checkout')";
+            $mysqli->query($sql);
+        }
+    }else{
+        $sql = "UPDATE `customer` SET `customer_name`='$customer_name',`phone_no`='$phone_no',`email`='$email' WHERE `nrc`='$nrc'";
+        if($mysqli->query($sql)) {
+            $id = $customerResultID->fetch_assoc()['id'];
+            $sql = "UPDATE `room` SET `taken`=1 where `id`=$roomIdValue";
+            $mysqli->query($sql);
+            $sql = "INSERT INTO `customer_room` (`customer_id`,`room_id`,`checkin_time`,`checkout_time`) VALUE ($id,$roomIdValue,'$checkin','$checkout')";
+            $mysqli->query($sql);
+        }
     }
+
 
 }
 

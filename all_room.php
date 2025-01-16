@@ -65,7 +65,7 @@
                     <div class="row g-3">
                         <?php while ($room = $superior->fetch_assoc()) { ?>
                             <div class="col-2">
-                                <button data-bs-toggle="modal"
+                                <button data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>"  data-bs-toggle="modal"
                                     data-bs-target="#<?php
                                                         if ($room['taken'] == 0) {
                                                             echo "addModal";

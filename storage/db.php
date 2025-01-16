@@ -19,7 +19,7 @@ function create_tables($mysqli)
     if(!$mysqli->query($sql)){
         return false;
     }
-    $sql = "CREATE TABLE IF NOT EXISTS `customer` (`id` INT AUTO_INCREMENT,`customer_name` VARCHAR(45) NOT NULL,`nrc` VARCHAR(45),`phone_no` INT NOT NULL ,`email` VARCHAR(100) NOT NULL,PRIMARY KEY (`id`))";
+    $sql = "CREATE TABLE IF NOT EXISTS `customer` (`id` INT AUTO_INCREMENT,`customer_name` VARCHAR(45) NOT NULL,`nrc` VARCHAR(45),`phone_no` VARCHAR(11) ,`email` VARCHAR(100) NOT NULL,PRIMARY KEY (`id`))";
     if (!$mysqli->query($sql)) {
         return false;
     }
@@ -38,21 +38,11 @@ function create_tables($mysqli)
         return false;
     }
 
-    // $sql = "CREATE TABLE IF NOT EXISTS `booking`(`id` INT AUTO_INCREMENT,`room_id` INT NOT NULL,`checkin_date` DATETIME NOT NULL,`checkout_date` DATETIME NOT NULL,`customer_id` INT NOT NULL ,PRIMARY KEY (`id`),FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`),FOREIGN KEY (`room_id`) REFERENCES `room`(`id`))";
-    // if (!$mysqli->query($sql)) {
-    //     return false;
-    // }
-
-    $sql = "CREATE TABLE IF NOT EXISTS `customer_room`(`id` INT AUTO_INCREMENT,`customer_id` INT NOT NULL,`room_id` INT NOT NULL,`checkin_time` DATETIME NOT NULL,`checkout_time` DATETIME NOT NULL,`extra_bed` INT NOT NULL,PRIMARY KEY(`id`),FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`),FOREIGN KEY (`room_id`) REFERENCES `room`(`id`))";
+    $sql = "CREATE TABLE IF NOT EXISTS `customer_room`(`id` INT AUTO_INCREMENT,`customer_id` INT NOT NULL,`room_id` INT NOT NULL,`checkin_time` DATETIME NOT NULL,`checkout_time` DATETIME NOT NULL,`extra_bed` INT,PRIMARY KEY(`id`),FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`),FOREIGN KEY (`room_id`) REFERENCES `room`(`id`))";
     if (!$mysqli->query($sql)) {
         return false;
     }
 
-
-    $sql = "CREATE TABLE IF NOT EXISTS `customer` (`id` INT AUTO_INCREMENT,`customer_name` VARCHAR(45) NOT NULL,`nrc` VARCHAR(45) NOT NULL,`phone_no` INT NOT NULL ,`email` VARCHAR(100) NOT NULL,PRIMARY KEY (`id`))";
-    if (!$mysqli->query($sql)) {
-        return false;
-    }
 
     $sql = "CREATE TABLE IF NOT EXISTS `staff` (`id` INT AUTO_INCREMENT,`staff_name` VARCHAR(45) NOT NULL,`age` INT NOT NULL,`phone_no` INT NOT NULL ,`email` VARCHAR(100) NOT NULL,`gender` INT NOT NULL,`role` VARCHAR(45) NOT NULL ,PRIMARY KEY (`id`))";
     if (!$mysqli->query($sql)) {
