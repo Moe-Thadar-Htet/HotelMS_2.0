@@ -8,22 +8,38 @@ function add_booking($mysqli,$room_id,$checkin_date,$checkout_date,$customer_id)
    
     
 }
-function sell_booking($mysqli,$room_id,$checkin_date,$checkout_date,$email,$name,$phonenumber)
+function sell_booking($mysqli,$room_id,$checkin_date,$checkout_date,$email,$name,$phonenumber,$nrc)
 {
-    
-    $sql = "INSERT INTO `customer` (`customer_name`,`phone_no`,`email`) VALUE ('$name','$phonenumber','$email')";
-    if($mysqli->query($sql)){
-        $sql = "SELECT id FROM `customer` ORDER BY `id` desc limit 1";
-        $idResult = $mysqli->query($sql);
-        $id = $idResult->fetch_assoc()['id'];
-        $sql = "INSERT INTO `booking` (`room_id`,`checkin_date`,`checkout_date`,`customer_id`) VALUE ($room_id,'$checkin_date','$checkout_date',$id)";
-        $mysqli->query( $sql);
-        $sql = "UPDATE `room` SET `taken`=2 where `id`=$room_id";
-        $mysqli->query($sql);
-        return true;
+    $sql = "SELECT * FROM `customer` WHERE `nrc`='$nrc'";
+    $customerResult = $mysqli->query($sql);
+    $customerResultID = $mysqli->query($sql);
+    if(count($customerResult->fetch_all())==0){
+        $sql = "INSERT INTO `customer` (`customer_name`,`phone_no`,`email`) VALUE ('$name','$phonenumber','$email')";
+        if($mysqli->query($sql)){
+            $sql = "SELECT id FROM `customer` ORDER BY `id` desc limit 1";
+            $idResult = $mysqli->query($sql);
+            $id = $idResult->fetch_assoc()['id'];
+            $sql = "INSERT INTO `booking` (`room_id`,`checkin_date`,`checkout_date`,`customer_id`) VALUE ($room_id,'$checkin_date','$checkout_date',$id)";
+            $mysqli->query( $sql);
+            $sql = "UPDATE `room` SET `taken`=2 where `id`=$room_id";
+            $mysqli->query($sql);
+            return true;
+        }else{
+            return false;
+        }
     }else{
-        return false;
+        $sql = "UPDATE `customer` SET `customer_name`='$name',`phone_no`='$phonenumber',`email`='$email' WHERE `nrc`='$nrc'";
+        if($mysqli->query($sql)) {
+            $id = $customerResultID->fetch_assoc()['id'];
+            $sql = "INSERT INTO `booking` (`room_id`,`checkin_date`,`checkout_date`,`customer_id`) VALUE ($room_id,'$checkin_date','$checkout_date',$id)";
+            $mysqli->query( $sql);
+            $sql = "UPDATE `room` SET `taken`=2 where `id`=$room_id";
+            $mysqli->query($sql);
+            return true;
+        }
     }
+    
+    
     
 }
 function get_booking($mysqli)

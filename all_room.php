@@ -15,7 +15,19 @@
                     <div class="row g-3">
                         <?php while ($room = $superior->fetch_assoc()) { ?>
                             <div class="col-2">
-                                <button data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>" data-bs-toggle="modal"
+                                <button class="d-none" id="clickYellow" data-bs-toggle="modal" data-bs-target="#bookingModal" > </button>
+                                <button class="d-none" id="clickRed" data-bs-toggle="modal" data-bs-target="#customerModal" > </button>
+                                <button onclick="<?php
+                                if ($room['taken'] == 2) {
+                                    ?>
+                                    location.replace('?bookingConfirm=<?= $room['id'] ?>');
+                                    <?php
+                                }else if($room['taken'] == 1){
+                                    ?>
+                                    location.replace('?availableNow=<?= $room['id'] ?>');
+                                    <?php
+                                }
+                                ?>" data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>" data-bs-toggle="modal"
                                     data-bs-target="#<?php
                                                         if ($room['taken'] == 0) {
                                                             echo "addModal";
@@ -99,22 +111,21 @@
 <div class="modal fade" id="customerModal">
     <div class="modal-dialog">
         <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title">Room Number: <span class="room-no-value"></span>
+        <div class="modal-header">
+                <h5 class="modal-title">Room Number: <span class="room-no-value"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               
-                <p>Customer Name: </p>
-                <p>NRC: </p>
-                <p>Phone Number: </p>
-                <p>Email Address: </p>
-                <p>Check In Date: </p>
-                <p>Check Out Date: </p>
+                <p>Customer Name: <span id="sell_cus_name"></span></p>
+                <p>Phone Number: <span id="sell_cus_phone"></span></p>
+                <p>Email Address: <span id="sell_cus_email"></span></p>
+                <p>Check In Date: <span id="sell_cus_checkin"></span></p>
+                <p>Check Out Date: <span id="sell_cus_checkout"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Make it Available</button>
+                <a  class="btn btn-success make_it_available">Make it Available</a>
             </div>
         </div>
     </div>
@@ -129,15 +140,15 @@
             </div>
             <div class="modal-body">
                 <div class="modal-body">
-                    <p>Customer Name: </p>
-                    <p>Phone Number: </p>
-                    <p>Check In Date: </p>
+                    <p>Customer Name: <span id="cust__name"></span></p>
+                    <p>Phone Number: <span id="cust__phone"></span></p>
+                    <p>Check In Date: <span id="book__checkingdate"></span></p>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Make it Available</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#sellRoomModal" class="btn btn-danger">Make it Sold-out</button>
+                <a  class="btn btn-success make_it_available">Make it Available</a>
+                <a  class="btn btn-danger make_it_sold_out">Make it Sold-out</a>
             </div>
         </div>
     </div>

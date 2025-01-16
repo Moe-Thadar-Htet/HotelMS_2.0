@@ -82,7 +82,7 @@
         }
 
         if($name_err=="" && $email_err=="" && $phonenumber_err=="" && $date_err=="" && $checkout_date_err=="" && $invalid == true){
-            $status = sell_booking($mysqli,$roomIdValue,$date,$checkout_date,$email,$name,$phonenumber);
+            $status = sell_booking($mysqli,$roomIdValue,$date,$checkout_date,$email,$name,$phonenumber,$nrc);
             if($status){
                 echo "<script>location.replace('./index.php');</script>";
             }else{
@@ -192,7 +192,7 @@
                     </div>
                     <div class="form-floating mt-2">
                         <div class="mt-4">Check-Out Date
-                            <input type="date" name="checkout_date" class="form-control" value="<?php echo htmlspecialchars($checkout_date); ?>" id="checkin2">
+                            <input type="date" name="checkout_date" class="form-control" value="<?php echo htmlspecialchars($checkout_date); ?>" id="checkout2">
                             <div style="color: red;"><?= $checkout_date_err ?></div>
                         </div>
                     </div>
