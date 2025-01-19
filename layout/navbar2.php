@@ -1,4 +1,6 @@
 <!-- Admin_Navigation_Bar -->
+
+<link rel="stylesheet" href="../asset/css2/room.css">
 <div id="nav" class="navbar navbar-dark navbar-expand fixed-top" style="background-color: #1A1A1A;">
         <div class="container">
             <a href="index.html" class="navbar-brand me-5" style="color: #F5F5F5;">
@@ -15,14 +17,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="./index.php?cleaning_list" class="nav-link"  >
+                            <span class="nav-text btn orange ms-auto"
+                            style=" <?php 
+                             if(isset($_GET['request'])){
+                                echo "background-color:#ff6347; color:#FFFFFF   ";
+                            } 
+                            ?>"
+                             id="cleaning_list">Cleaning List<i class="fas fa-list" style="padding-left: 5px;"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="./index.php?request" class="nav-link"  >
                             <span class="nav-text btn btn-outline-primary ms-auto"
                             style="<?php 
                              if(isset($_GET['request'])){
-                                echo "background-color:rgb(42, 16, 240);color:#000000;";
+                                echo "background-color:#0C6DFD; color:#FFFFFF";
                             } 
                             ?>"
-                             id="request">book request<i class="fa fa-bookmark "></i></span>
+                             id="request">Booking Request<i class="fa fa-bookmark" style="padding-left: 5px;"></i></span>
                         </a>
                     </li>
                     
@@ -99,14 +112,25 @@
                <ul class="navbar-nav">
 
                <li class="nav-item">
+                        <a href="/index.php?list" class="nav-link"  >
+                            <span class="nav-text btn orange ms-auto"
+                            style="<?php 
+                             if(isset($_GET['request'])){
+                                echo "background-color:#ff6347; color:#FFFFFF";
+                            } 
+                            ?>"
+                             id="list">Cleaning List<i class="fas fa-list" style="padding-left: 5px;"></i></span>
+                        </a>
+                    </li>
+               <li class="nav-item">
                         <a href="./index.php?request" class="nav-link"  >
                             <span class="nav-text btn btn-outline-primary ms-auto"
                             style="<?php 
                              if(isset($_GET['request'])){
-                                echo "background-color:rgb(42, 16, 240);color:#000000;";
+                                echo "background-color:#0C6DFD; color:#FFFFFF;";
                             } 
                             ?>"
-                             id="request">book request<i class="fa fa-bookmark "></i></span>
+                             id="request">Booking Request<i class="fa fa-bookmark" style="padding-left: 5px;"></i></span>
                         </a>
                     </li>
 

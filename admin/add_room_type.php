@@ -158,11 +158,6 @@ if(isset($_POST["room_type_name"])){
                            
                         </tbody>
                     </table>
-                    <?php if (!isset($_POST['search'])) {
-                            require_once("../layout/pagination.php");
-                        } else if (isset($_POST['search']) && $_POST['search'] == "") {
-                            require_once("../layout/pagination.php");
-                        } ?>
                 </div>
                 </div>
            </div> 

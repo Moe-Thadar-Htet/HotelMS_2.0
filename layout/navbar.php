@@ -1,7 +1,7 @@
 <nav class="nav">
     <div class="logo ms-0">
         <div class="logo-area">
-            <a href="#"> <img class="profile" src="../asset/css/img/images.png"></a>
+            <a href="#"> <img class="profile" style="border-radius: 20px;" src="../asset/css/img/images.png"></a>
         </div>
     </div>
     <div>
@@ -28,7 +28,7 @@
         </div>
         <div class="dropdown">
             <div type="button" data-bs-toggle="dropdown">
-                <img class="profile" src="../asset/css/img/admin.png">
+                <img class="profile" style="border-radius: 20px;" src="../asset/css/img/admin.png">
             </div>
             <form method="post">
                 <ul class="dropdown-menu">

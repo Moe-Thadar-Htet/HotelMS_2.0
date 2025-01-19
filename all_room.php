@@ -1,4 +1,3 @@
-
 <div style="margin-top: 120px;">
     <section id="superior">
         <div class="card shadow">
@@ -15,19 +14,19 @@
                     <div class="row g-3">
                         <?php while ($room = $superior->fetch_assoc()) { ?>
                             <div class="col-2">
-                                <button class="d-none" id="clickYellow" data-bs-toggle="modal" data-bs-target="#bookingModal" > </button>
-                                <button class="d-none" id="clickRed" data-bs-toggle="modal" data-bs-target="#customerModal" > </button>
+                                <button class="d-none" id="clickYellow" data-bs-toggle="modal" data-bs-target="#bookingModal"> </button>
+                                <button class="d-none" id="clickRed" data-bs-toggle="modal" data-bs-target="#customerModal"> </button>
                                 <button onclick="<?php
-                                if ($room['taken'] == 2) {
-                                    ?>
+                                                    if ($room['taken'] == 2) {
+                                                    ?>
                                     location.replace('?bookingConfirm=<?= $room['id'] ?>');
                                     <?php
-                                }else if($room['taken'] == 1){
+                                                    } else if ($room['taken'] == 1) {
                                     ?>
                                     location.replace('?availableNow=<?= $room['id'] ?>');
                                     <?php
-                                }
-                                ?>" data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>" data-bs-toggle="modal"
+                                                    }
+                                    ?>" data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>" data-bs-toggle="modal"
                                     data-bs-target="#<?php
                                                         if ($room['taken'] == 0) {
                                                             echo "addModal";
@@ -77,7 +76,19 @@
                     <div class="row g-3">
                         <?php while ($room = $superior->fetch_assoc()) { ?>
                             <div class="col-2">
-                                <button data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>"  data-bs-toggle="modal"
+                                <button class="d-none" id="clickYellow" data-bs-toggle="modal" data-bs-target="#bookingModal"> </button>
+                                <button class="d-none" id="clickRed" data-bs-toggle="modal" data-bs-target="#customerModal"> </button>
+                                <button onclick="<?php
+                                                    if ($room['taken'] == 2) {
+                                                    ?>
+                                    location.replace('?bookingConfirm=<?= $room['id'] ?>');
+                                    <?php
+                                                    } else if ($room['taken'] == 1) {
+                                    ?>
+                                    location.replace('?availableNow=<?= $room['id'] ?>');
+                                    <?php
+                                                    }
+                                    ?>" data-id="<?= $room['id'] ?>" data-value="<?= $room['room_no'] ?>" data-bs-toggle="modal"
                                     data-bs-target="#<?php
                                                         if ($room['taken'] == 0) {
                                                             echo "addModal";
@@ -102,6 +113,7 @@
                             </div>
 
                         <?php } ?>
+
                     </div>
                 </div>
             </div>
@@ -111,22 +123,26 @@
 <div class="modal fade" id="customerModal">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-                <h5 class="modal-title">Room Number: <span class="room-no-value"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              
-                <p>Customer Name: <span id="sell_cus_name"></span></p>
-                <p>Phone Number: <span id="sell_cus_phone"></span></p>
-                <p>Email Address: <span id="sell_cus_email"></span></p>
-                <p>Check In Date: <span id="sell_cus_checkin"></span></p>
-                <p>Check Out Date: <span id="sell_cus_checkout"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a  class="btn btn-success make_it_available">Make it Available</a>
-            </div>
+            <form method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Room Number: <span class="room-no-value"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Customer Name: <span id="sell_cus_name" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Phone Number: <span id="sell_cus_phone" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>NRC : <span id="sell_cus_nrc" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Email Address: <span id="sell_cus_email" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Check In Date: <span id="sell_cus_checkin" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Check Out Date: <span id="sell_cus_checkout" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Cleaning staff <select class="form-select" name="staff_id" id="sell_cus_select"></select></p>
+                    <input type="hidden" name="sell_cus_room_id" id="sell_cus_room_id_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Make it Available</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -140,15 +156,16 @@
             </div>
             <div class="modal-body">
                 <div class="modal-body">
-                    <p>Customer Name: <span id="cust__name"></span></p>
-                    <p>Phone Number: <span id="cust__phone"></span></p>
-                    <p>Check In Date: <span id="book__checkingdate"></span></p>
+                    <p>Customer Name: <span id="cust__name" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Customer NRC: <span id="cust__nrc" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Phone Number: <span id="cust__phone" style="color: #007bff; padding-left: 10px"></span></p>
+                    <p>Check In Date: <span id="book__checkingdate" style="color: #007bff; padding-left: 10px"></span></p>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a  class="btn btn-success make_it_available">Make it Available</a>
-                <a  class="btn btn-danger make_it_sold_out">Make it Sold-out</a>
+                <a class="btn btn-success make_it_available">Make it Available</a>
+                <a class="btn btn-danger make_it_sold_out">Make it Sold-out</a>
             </div>
         </div>
     </div>

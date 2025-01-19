@@ -49,4 +49,15 @@ function update_staff($mysqli,$id,$staff_name,$age,$phone_no,$email,$gender,$rol
     return $mysqli->query($sql);
 }
 
+function join_cleaning_list($mysqli)
+{
+    $sql = "SELECT duty.duty_name,staff.staff_name,room.room_no,cleaning.cleaning_date,cleaning.cleaning_time FROM cleaning 
+    INNER JOIN duty_staff ON cleaning.duty_staff_id = duty_staff.id
+    INNER JOIN duty ON duty_staff.duty_id = duty.id
+    INNER JOIN staff ON duty_staff.staff_id = staff.id
+    INNER JOIN room ON cleaning.room_id = room.id";
+    return $mysqli->query($sql);
+}
+
+
 ?>
