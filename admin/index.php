@@ -5,60 +5,73 @@
 
     <div class="role-container-total col-3">
         <div class="admin-total">
-            <div class="card card-btn">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span class="admin-text"><i class="fa-solid fa-hotel me-2 mt-3"></i>Booking request</span>
-                        <span class="d-inline"><?= count(join_customer_booking($mysqli)->fetch_all());?></span>
-                    </div>
+        <div class="card card-btn mb-4">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-hotel me-3"></i>Booking Request
+                    </span>
+                    <span class="badge bg-danger rounded-pill">
+                        <?= count(join_customer_booking($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-
             </div>
        
 
-            <div class="card card-btn mt-4">
+            <div class="card card-btn mb-4">
                 <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="admin-text"><i class="fa-solid fa-hotel me-2 mt-3"></i>Total Room</span>
-                    <span class="d-inline"><?= count(get_room($mysqli)->fetch_all());?></span>
-                    
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-bed me-3"></i>Total Room
+                    </span>
+                    <span class="badge bg-primary rounded-pill">
+                        <?= count(get_room($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-
             </div>
     
 
-            <div class="card card-btn mt-4">
+            <div class="card card-btn mb-4">
                 <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="admin-text"><i class="fa-solid fa-bed me-2 mt-3"></i>Total Room Type</span>
-                    <span class="d-inline"><?= count(get_room_type($mysqli)->fetch_all());?></span>
-
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-door-open me-3"></i>Total Room Type
+                    </span>
+                    <span class="badge bg-info rounded-pill">
+                        <?= count(get_room_type($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-
             </div>
     
-            <div class="card card-btn mt-4">
+            <div class="card card-btn mb-4">
                 <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="admin-text"><i class="fa-solid fa-users me-2 mt-3"></i>Total Customer </span>
-                    <span class="d-inline"><?= count(get_customer($mysqli)->fetch_all());?></span>
-                
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-users me-3"></i>Total Customer
+                    </span>
+                    <span class="badge bg-success rounded-pill">
+                        <?= count(get_customer($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-
             </div>
       
-            <div class="card card-btn mt-4">
+            <div class="card card-btn mb-4">
                 <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="admin-text"><i class="fa-solid fa-user-tie me-2 mt-3"></i>Total Staff</span>
-                    <span class="d-inline"><?= count(get_staff($mysqli)->fetch_all());?></span>
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-user-tie me-3"></i>Total Staff
+                    </span>
+                    <span class="badge bg-secondary rounded-pill">
+                        <?= count(get_staff($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-
             </div>
     
-            <div class="card card-btn mt-4">
+            <div class="card card-btn mb-4">
                 <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="admin-text"><i class="fa-solid fa-bookmark me-2 mt-3"></i>Total Booking</span>
-                    <span class="d-inline"><?= count(get_booking($mysqli)->fetch_all());?></span>
-                   
+                    <span class="admin-text d-flex align-items-center">
+                        <i class="fa-solid fa-bookmark me-3"></i>Total Booking
+                    </span>
+                    <span class="badge bg-dark rounded-pill">
+                        <?= count(get_booking($mysqli)->fetch_all());?>
+                    </span>
                 </div>
-            </div>       
+            </div>
 
         </div>
     
@@ -114,6 +127,58 @@
 
 </div>
 
+<style>
+    
+    .card-body {
+        padding: 20px;
+    }
+
+    .admin-text {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 6px 12px;
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .card-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-btn i {
+        font-size: 20px;
+    }
+
+    .text-primary { color: #007bff; }
+    .text-success { color: #28a745; }
+    .text-info { color: #17a2b8; }
+    .text-warning { color: #ffc107; }
+    .text-danger { color: #dc3545; }
+    .text-dark { color: #343a40; }
+
+    /* Responsive styling */
+    @media (max-width: 768px) {
+        .role-container-total {
+            width: 100%;
+            height: auto; /* Allow for dynamic height on smaller screens */
+            position: relative;
+        }
+
+        .role-container {
+            margin-left: 0; /* Reset margin-left for small screens */
+        }
+
+        .card-btn {
+            margin-bottom: 15px;
+        }
+    }
+</style>
   
       
 

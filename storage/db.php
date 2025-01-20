@@ -19,7 +19,7 @@ function create_tables($mysqli)
     if(!$mysqli->query($sql)){
         return false;
     }
-    $sql = "CREATE TABLE IF NOT EXISTS `customer` (`id` INT AUTO_INCREMENT,`customer_name` VARCHAR(45) NOT NULL,`nrc` VARCHAR(45),`phone_no` VARCHAR(11) ,`email` VARCHAR(100) NOT NULL,PRIMARY KEY (`id`))";
+    $sql = "CREATE TABLE IF NOT EXISTS `customer` (`id` INT AUTO_INCREMENT,`customer_name` VARCHAR(45) NOT NULL,`nrc` VARCHAR(45) NOT NULL,`phone_no` VARCHAR(11) ,`email` VARCHAR(100) NOT NULL,PRIMARY KEY (`id`))";
     if (!$mysqli->query($sql)) {
         return false;
     }
@@ -55,6 +55,10 @@ function create_tables($mysqli)
     }
 
     $sql = "CREATE TABLE IF NOT EXISTS `duty_staff` (`id` INT AUTO_INCREMENT,`duty_id` INT NOT NULL,`staff_id` INT NOT NULL,`start_date` DATE NOT NULL,`end_date` DATE NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`duty_id`) REFERENCES `duty`(`id`),FOREIGN KEY (`staff_id`) REFERENCES `staff`(`id`))";
+    if (!$mysqli->query($sql)) {
+        return false;
+    }
+    $sql = "CREATE TABLE IF NOT EXISTS `cleaning` (`id` INT AUTO_INCREMENT,`duty_staff_id` INT NOT NULL,`room_id` INT NOT NULL,`cleaning_date` DATE NOT NULL DEFAULT (CURRENT_DATE),`cleaning_time` TIME NOT NULL DEFAULT (CURRENT_TIME),PRIMARY KEY (`id`),FOREIGN KEY (`duty_staff_id`) REFERENCES `duty_staff`(`id`),FOREIGN KEY (`room_id`) REFERENCES `room`(`id`))";
     if (!$mysqli->query($sql)) {
         return false;
     }

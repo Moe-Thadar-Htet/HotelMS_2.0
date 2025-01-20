@@ -14,7 +14,7 @@ function sell_booking($mysqli,$room_id,$checkin_date,$checkout_date,$email,$name
     $customerResult = $mysqli->query($sql);
     $customerResultID = $mysqli->query($sql);
     if(count($customerResult->fetch_all())==0){
-        $sql = "INSERT INTO `customer` (`customer_name`,`phone_no`,`email`) VALUE ('$name','$phonenumber','$email')";
+        $sql = "INSERT INTO `customer` (`customer_name`,`phone_no`,`email`,`nrc`) VALUE ('$name','$phonenumber','$email','$nrc')";
         if($mysqli->query($sql)){
             $sql = "SELECT id FROM `customer` ORDER BY `id` desc limit 1";
             $idResult = $mysqli->query($sql);
