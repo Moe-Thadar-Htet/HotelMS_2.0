@@ -51,10 +51,11 @@ if(isset($_GET["deleteId"])){
         if($user_name === ""){
             $user_name_err = "User name can't be blanked!";
             $invalid = false;
-        }else if(is_numeric($phone_number)){
-            $user_name_err = "Use Name can't be number!";
-            $invalid = false;
         }
+        // else if(is_numeric($phone_number)){
+        //     $user_name_err = "Use Name can't be number!";
+        //     $invalid = false;
+        // }
 
         if($email === ""){
             $email_err = "Email can't be blanked!";
@@ -70,8 +71,9 @@ if(isset($_GET["deleteId"])){
         if($password === ""){
             $pssword_err = "Password cant't be blanked!";
             $invalid = false;
-        }else if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/", $password)) {
-            $passwordErr = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+        }
+        else if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/", $password)) {
+            $pssword_err = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
             $invalid = false;
         }
         
@@ -87,20 +89,18 @@ if(isset($_GET["deleteId"])){
             $role_err = "Role can't be blanked!";
             $invalid = false;
         } 
-
         if($invalid){
             $hashpassword = password_hash($password, PASSWORD_BCRYPT);
             if($hashpassword){
                 if(isset($_GET["editId"])){
                     $hashpasswords =password_hash($user["password"], PASSWORD_BCRYPT);
-
                     $update = update_user($mysqli,$_GET["editId"],$user_name,$email,$hashpasswords,$phone_number,$role);
                     if($update){
-                        echo "<script>location.repalce('./add_user.php')</script>";
+                        echo "<script>location.replace('./add_user.php')</script>";
                     }else{
                     $add = add_user($mysqli,$user_name,$email,$hashpassword,$phone_number,$role);
                     if($add){
-                        echo "<script>location.repalce('./add_user.php')</script>";
+                        echo "<script>location.replace('./add_user.php')</script>";
                         }   
                     } 
                 }

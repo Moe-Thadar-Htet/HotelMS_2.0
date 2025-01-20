@@ -42,10 +42,11 @@ if(isset($_POST["room_no"])){
      if($room_no ===  ""){
         $room_no_err =" Room Number can't be blanked!";
         $invalid     = false;
-     }}else if(!is_numeric($room_no)){
-        $room_no_err = "Room Number must be numeric!";
-        $invalid = false;
-    }
+     }
+    //  }else if(!is_numeric($room_no)){
+    //     $room_no_err = "Room Number must be numeric!";
+    //     $invalid = false;
+    // }
      if($room_type ===  ""){
         $room_type_err =" Room Type can't be blanked!";
         $invalid       = false;
@@ -94,6 +95,7 @@ if(isset($_POST["room_no"])){
             } 
         }
     }
+    }
      
 
 
@@ -134,12 +136,12 @@ if(isset($_POST["room_no"])){
                         ?>><?= $room_type["room_type_name"]?></option>
                         <?php } ?> 
                     </select>                                  
-                    <div class="text-danger" id="valid"  style="font-size:12px;"><?= $room_type_err?></div>
+                    <div class="text-danger err" id="valid"  style="font-size:12px;"><?= $room_type_err?></div>
                 </div>
                 <div class="form-group"> 
                     <label for="single_bed" class="form-label">Single Bed</label>
                     <input type="text" name="single_bed" class="form-control" id="single_bed" value="<?=$single_bed?>">
-                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $single_bed_err ?></div>
+                    <div class="text-danger err" id="valid" style="font-size:12px;"><?= $single_bed_err ?></div>
                 </div>
                 <div class="form-group"> 
                     <label for="double_bed" class="form-label">Double Bed</label>
@@ -149,12 +151,12 @@ if(isset($_POST["room_no"])){
                 <div class="form-group"> 
                     <label for="twin_bed" class="form-label">Twin Bed</label>
                     <input type="text" name="twin_bed" class="form-control" id="twin_bed" value="<?=$twin_bed?>">
-                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $twin_bed_err ?></div>
+                    <div class="text-danger err" id="valid" style="font-size:12px;"><?= $twin_bed_err ?></div>
                 </div>
                 <div class="form-group">
                     <label for="price" class="form-label">Price</label>
                     <input type="text" name="price" class="form-control" id="price" value="<?=$price?>">
-                    <div class="text-danger" id="valid" style="font-size:12px;"><?= $price_err?></div>
+                    <div class="text-danger err" id="valid" style="font-size:12px;"><?= $price_err?></div>
                 </div>
                 <!-- <div class="form-group">
                     <input type="checkbox" name="taken" id="taken" class="form-check-input"/>

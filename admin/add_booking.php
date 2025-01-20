@@ -173,10 +173,10 @@ if(isset($_POST["room_id"])){
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Room Id</th>
+                                <th>Room Number</th>
                                 <th>Checkin Date</th>
                                 <th>Checkout Date</th>
-                                <th>Customer ID</th>
+                                <th>Customer Number</th>
                                 <th>Action</th>
                             
                             </tr>
@@ -186,7 +186,7 @@ if(isset($_POST["room_id"])){
                             if (isset($_POST["search"]) && $_POST['search'] != '') {
                                 $bookings = get_booking_filter($mysqli, $_POST['search']);
                             } else {
-                                $bookings = get_bookings($mysqli,$currentPage);
+                                $bookings = get_bookings_join($mysqli,$currentPage);
                             } ?>
                         <?php
                             if (isset($_POST["search"])) {
@@ -197,10 +197,10 @@ if(isset($_POST["room_id"])){
                             <?php while ($booking = $bookings->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
-                                <td><?= $booking["room_id"]?></td>
+                                <td><?= $booking["room_no"]?></td>
                                 <td><?= $booking["checkin_date"]?></td>
                                 <td><?= $booking["checkout_date"]?></td>
-                                <td><?= $booking["customer_id"]?></td>
+                                <td><?= $booking["customer_name"]?></td>
                                 <td>
                                     <a href="?editId=<?=$booking['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
                                     <button class="btn btn-sm btn-danger  deleteSelect" data-value="<?=$booking['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>

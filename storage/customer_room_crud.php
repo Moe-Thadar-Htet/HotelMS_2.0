@@ -2,7 +2,7 @@
 
 function add_customer_room($mysqli,$customer_id,$room_id,$checkin_time,$checkout_time,$extra_bed)
 {
-    $sql = "INSERT INTO `customer_room` (`customer_id`,`room_id`,`checkin_id`,`checkout_time`,`extra_bed`,`status`) VALUE ('$customer_id','$room_id','$checkin_time','$checkout_time','$extra_bed')";
+    $sql = "INSERT INTO `customer_room` (`customer_id`,`room_id`,`checkin_time`,`checkout_time`,`extra_bed`) VALUE ('$customer_id','$room_id','$checkin_time','$checkout_time','$extra_bed')";
     return $mysqli->query($sql);
 }
 function get_customer_room($mysqli)
@@ -17,14 +17,14 @@ function get_customer_room_id($mysqli,$id)
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
-function get_customer_rooms($mysqli, $currentPage)
+function get_customer_rooms_join($mysqli, $currentPage)
 {
-    $sql = "SELECT * FROM `customer_room` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    $sql = "SELECT cr.*,c.customer_name,r.room_no FROM `customer_room` cr INNER JOIN `customer` c ON cr.customer_id = c.id INNER JOIN `room` r ON cr.room_id = r.id ORDER BY cr.`id`LIMIT 7 OFFSET $currentPage";
     return $mysqli->query($sql);
 }
 function get_customer_rooms_filter($mysqli, $key)
 {
-    $sql = "SELECT * FROM `customer_room` WHERE `customer_id` LIKE '%$key%' OR `customer_id`='$key'";
+    $sql = "SELECT cr.*,c.customer_name,r.room_no FROM `customer_room` cr INNER JOIN `customer` c ON cr.customer_id = c.id INNER JOIN `room` r ON cr.room_id = r.id WHERE c.`customer_name` LIKE '%$key%' OR c.`customer_name`='$key'";
     return $mysqli->query($sql);
 }
 

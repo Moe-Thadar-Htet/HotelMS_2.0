@@ -53,14 +53,14 @@ function get_booking_id($mysqli,$id)
     $result = $mysqli->query( $sql);
     return $result->fetch_assoc();
 }
-function get_bookings($mysqli, $currentPage)
+function get_bookings_join($mysqli, $currentPage)
 {
-    $sql = "SELECT * FROM `booking` ORDER BY `id` LIMIT 7 OFFSET $currentPage";
+    $sql = "SELECT b.*,c.customer_name,r.room_no FROM `booking` b INNER JOIN `customer` c ON b.customer_id = c.id INNER JOIN `room` r ON b.room_id = r.id ORDER BY b.`id` LIMIT 7 OFFSET $currentPage";
     return $mysqli->query($sql);
 }
 function get_booking_filter($mysqli, $key)
 {
-    $sql = "SELECT * FROM `booking` WHERE `room_id` LIKE '%$key%' OR `room_id`='$key'";
+    $sql = "SELECT b.*,c.customer_name,r.room_no FROM `booking` b INNER JOIN `customer` c ON b.customer_id = c.id INNER JOIN `room` r ON b.room_id = r.id WHERE `room_no` LIKE '%$key%' OR `room_no`='$key'";
     return $mysqli->query($sql);
 }
 

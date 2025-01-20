@@ -7,7 +7,6 @@ $room_id     = $room_id_err = "";
 $checkin_time= $checkin_time_err = "";
 $checkout_time = $checkout_time_err = "";
 $extra_bed = $extra_bed_err ="";
-// $status     = $status_err     = "";
 $invalid    = true;
 
 $currentPage = 0;
@@ -26,10 +25,10 @@ if(isset($_GET["editId"])){
   $editId = $_GET["editId"];
   $customer_room =  get_customer_room_id($mysqli,$editId);
   $room_id = $customer_room["room_id"];
-  $checkin = $customer_room["checkin_time"];
-  $checkout_time = $room_booking["checkout_time"];
-  $extra_bed = $room_booking["extra_bed"];
-//   $status =$room_booking["status"];
+  $checkin_time = $customer_room["checkin_time"];
+  $checkout_time = $customer_room["checkout_time"];
+  $extra_bed = $customer_room["extra_bed"];
+
 }
 
 if(isset($_GET['deleteId'])){
@@ -208,8 +207,8 @@ if(isset($_POST["customer_id"])){
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Customer Id</th>
-                                <th>Room Id</th>
+                                <th>Customer Name</th>
+                                <th>Room Number</th>
                                 <th>Checkin Time</th>
                                 <th>Checkout Time</th>
                                 <th>Extra Bed</th>
@@ -222,7 +221,7 @@ if(isset($_POST["customer_id"])){
                             if (isset($_POST["search"]) && $_POST['search'] != '') {
                                 $customer_rooms = get_customer_rooms_filter($mysqli, $_POST['search']);
                             } else {
-                                $customer_rooms = get_customer_rooms($mysqli,$currentPage);
+                                $customer_rooms = get_customer_rooms_join($mysqli,$currentPage);
                             } ?>
                         <?php
                             if (isset($_POST["search"])) {
@@ -233,14 +232,13 @@ if(isset($_POST["customer_id"])){
                             <?php while ($customer_room = $customer_rooms->fetch_assoc()) { ?>
                             <tr>
                                 <td><?= $i?></td>
-                                <td><?= $customer_room["customer_id"]?></td>
-                                <td><?= $customer_room["room_id"]?></td>
+                                <td><?= $customer_room["customer_name"]?></td>
+                                <td><?= $customer_room["room_no"]?></td>
                                 <td><?= $customer_room["checkin_time"]?></td>
                                 <td><?= $customer_room["checkout_time"]?></td>
                                 <td><?= $customer_room["extra_bed"]?></td>
-                                
                                 <td>
-                                    <a href="?editId=<?=$customer_room['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
+                                    <a href="?editId=<?= $customer_room['id']?>" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></a>
                                     <button class="btn btn-sm btn-danger  deleteSelect" data-value="<?=$customer_room['id']?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                                 </td>
                               
